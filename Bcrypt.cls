@@ -36,6 +36,11 @@ public with sharing class Bcrypt {
         return BcryptImplementation.hash(s, salt);
     }
 
+    public static String hash(String s, Integer rounds){
+        String salt = genSalt(rounds);
+        return BcryptImplementation.hash(s, salt);
+    }
+
     public static Boolean compare(String s, String hash){
         if(hash.length() != 60){
             throw new IllegalArgumentException('Hash not does not have correct length');

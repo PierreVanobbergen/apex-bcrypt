@@ -1,11 +1,10 @@
 public with sharing class Bcrypt {
 
     public static Blob random(Integer len) {
-        Integer[] r = new List<Integer>();
-        for (Integer i = 0; i < len; i++){
-            r.add(Integer.valueOf(Math.random() * 255));
-        }
-        return Blob.valueOf(String.fromCharArray(r));
+        Blob blobKey = crypto.generateAesKey(128);
+        String key = EncodingUtil.convertToHex(blobKey);
+        String pwd = key.substring(0,len);
+        return Blob.valueOf(pwd);
         
     }
     public static String genSalt(Integer rounds) {
@@ -57,5 +56,4 @@ public with sharing class Bcrypt {
         }
         return diff == 0;
     }
-
 }

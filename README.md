@@ -11,6 +11,13 @@ increasing computation power. ([see](http://en.wikipedia.org/wiki/Bcrypt))
 The maximum input length is 72 bytes (note that UTF8 encoded characters use up to 4 bytes) and the length of generated
 hashes is 60 characters.
 
+## Deploy to Salesforce
+
+<a href="https://githubsfdeploy.herokuapp.com?owner=PierreVanobbergen&repo=apex-bcrypt&ref=main">
+  <img alt="Deploy to Salesforce"
+       src="https://raw.githubusercontent.com/afawcett/githubsfdeploy/master/deploy.png">
+</a>
+
 ## Usage
 
 To hash a password:

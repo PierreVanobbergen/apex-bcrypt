@@ -97,13 +97,11 @@ public class Radix64Encoder {
             res.add(rs[off].codePointAt(0));
         return Blob.valueOf(String.fromCharArray(res));
     }
-    public class UTFException extends Exception{
-    }
 
-    public static List < Integer > hexToInt(String hex) {
+    public static Integer hexToInt(String sourceHex) {
         String hex = '0123456789abcdef';
         String[] hexValue = sourceHex.split('');
-        Decimal result = 0;
+        Integer result = 0;
         for(Integer index = 0; index < hexValue.size(); index++) {
             result = (result * 16) + hex.indexOf(hexValue[index]);
         }
@@ -112,7 +110,13 @@ public class Radix64Encoder {
       
 
     public static Integer[] blobToIntegerArray (Blob data){
-        return Radix64Encoder.hexToInt(EncodingUtil.convertToHex(data));
+        String hex = EncodingUtil.convertToHex(data);
+        Integer[] res = new List<Integer>();
+        for (Integer i = 0; i < hex.length(); i+=2){
+            res.add(hexToInt(hex.substring(i, i + 2)));
+        }
+        return res;
     }
+    
     
 }

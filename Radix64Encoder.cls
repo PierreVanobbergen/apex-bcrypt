@@ -17,31 +17,6 @@ public class Radix64Encoder {
             'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5',
             '6', '7', '8', '9'
     };
-    private static Map < String, Integer > hexMap = new Map < String, Integer > ();
-        static{
-        hexMap.put('0', 0);
-        hexMap.put('1', 1);
-        hexMap.put('2', 2);
-        hexMap.put('3', 3);
-        hexMap.put('4', 4);
-        hexMap.put('5', 5);
-        hexMap.put('6', 6);
-        hexMap.put('7', 7);
-        hexMap.put('8', 8);
-        hexMap.put('9', 9);
-        hexMap.put('A', 10);
-        hexMap.put('B', 11);
-        hexMap.put('C', 12);
-        hexMap.put('D', 13);
-        hexMap.put('E', 14);
-        hexMap.put('F', 15);
-        hexMap.put('a', 10);
-        hexMap.put('b', 11);
-        hexMap.put('c', 12);
-        hexMap.put('d', 13);
-        hexMap.put('e', 14);
-        hexMap.put('f', 15);
-        }
     
     public static String encode(Blob data, Long len) {
         Integer[] b = blobToIntegerArray(data);
@@ -126,56 +101,13 @@ public class Radix64Encoder {
     }
 
     public static List < Integer > hexToInt(String hex) {
-        List < Integer > retVal = new List < Integer > ();
-        Integer i = 0;
-        while(i < hex.length()) {
-      
-          // http://en.wikipedia.org/wiki/UTF-8
-          integer numberOfBytes = 1;
-          integer byte1 = 0,
-          byte2 = 0,
-          byte3 = 0,
-          byte4 = 0;
-          integer utfCode = 0;
-          byte1 = (hexMap.get(hex.substring(i, i + 1)) * 16) + (hexMap.get(hex.substring(i + 1, i + 2)));
-      
-          //invalid sequences for byte1
-          if(byte1 >= 128 && byte1 <= 191) {
-            throw new UTFException('UTF-8:Continuation byte as first byte');
-          }
-          if(byte1 >= 192 && byte1 <= 193) {
-            throw new UTFException('UTF-8:Invalid 2-byte sequence');
-          }
-          if(byte1 >= 245) {
-            throw new UTFException('UTF-8:Invalid 4,5 or 6-byte sequence');
-          }
-      
-          if(byte1 >= 192) {
-            numberOfBytes = 2;
-            byte2 = (hexMap.get(hex.substring(i + 2, i + 2 + 1)) * 16) + (hexMap.get(hex.substring(i + 2 + 1, i + 2 + 2)));
-          }
-          if(byte1 >= 224) {
-            numberOfBytes = 3;
-            byte3 = (hexMap.get(hex.substring(i + 4, i + 4 + 1)) * 16) + (hexMap.get(hex.substring(i + 4 + 1, i + 4 + 2)));
-          }
-          if(byte1 >= 240) {
-            numberOfBytes = 4;
-            byte4 = (hexMap.get(hex.substring(i + 6, i + 6 + 1)) * 16) + (hexMap.get(hex.substring(i + 6 + 1, i + 6 + 2)));
-          }
-          if(numberOfBytes == 1) {
-            utfCode = byte1;
-          } else if(numberOfBytes == 2) {
-            utfCode = Math.mod(byte1, 32) * 64 + Math.mod(byte2, 64);
-          } else if(numberOfBytes == 3) {
-            utfCode = Math.mod(byte1, 16) * 64 * 64 + Math.mod(byte2, 64) * 64 + Math.mod(byte3, 64);
-          } else if(numberOfBytes == 4) {
-            utfCode = Math.mod(byte1, 8) * 64 * 64 * 64 + Math.mod(byte2, 64) * 64 * 64 + Math.mod(byte3, 64) * 64 + Math.mod(byte4, 64);
-          }
-      
-          retVal.add(utfCode);
-          i += 2 * numberOfBytes;
+        String hex = '0123456789abcdef';
+        String[] hexValue = sourceHex.split('');
+        Decimal result = 0;
+        for(Integer index = 0; index < hexValue.size(); index++) {
+            result = (result * 16) + hex.indexOf(hexValue[index]);
         }
-        return retVal;
+        return result;
       }
       
 
